@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+
+go_binary(
+    name = "builder",
+    embed = [":builder_lib"],
+    visibility = ["//:__subpackages__"],
+)
+
+go_library(
+    name = "builder_lib",
+    srcs = ["main.go"],
+    importpath = "go.ptx.dk/rules_tinygo/internal/builder/internal/builder",
+    visibility = ["//visibility:private"],
+)

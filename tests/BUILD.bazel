@@ -1,0 +1,7 @@
+load("@rules_tinygo//:def.bzl", "tinygo_binary")
+
+tinygo_binary(
+    name = "hello",
+    srcs = ["hello.go"],
+    go_sdk = "@go_sdk_1_21_7//:go_sdk",
+)
