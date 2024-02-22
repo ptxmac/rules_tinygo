@@ -12,6 +12,7 @@ def _tinygo_toolchain_impl(ctx):
     return [platform_common.ToolchainInfo(
         tinygo = tinygo_cmd,
         srcs = ctx.files.srcs,
+        targets = ctx.files.targets,
         libs = ctx.files.libs,
     )]
 
@@ -20,6 +21,7 @@ tinygo_toolchain = rule(
     attrs = {
         "tools": attr.label_list(mandatory = True),
         "srcs": attr.label_list(mandatory = True),
+        "targets": attr.label_list(mandatory = True),
         "libs": attr.label_list(mandatory = True),
     },
 )

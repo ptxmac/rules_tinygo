@@ -15,10 +15,16 @@ filegroup(
     srcs = glob(["lib/**/*"]),
 )
 
+filegroup(
+    name = "targets",
+    srcs = glob(["targets/**/*"]),
+)
+
 tinygo_toolchain(
     name = "toolchain_impl",
     srcs = [":src"],
     libs = [":lib"],
+    targets = [":targets"],
     tools = [":tools"],
 )
 

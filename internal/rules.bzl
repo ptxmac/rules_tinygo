@@ -11,13 +11,20 @@ def _tinygo_binary(ctx):
 
     toolchain = ctx.toolchains["@rules_tinygo//:toolchain_type"]
 
-    cmd = "{tinygo} build -o {out} {srcs}".format(
-        tinygo = toolchain.tinygo.path,
-        out = output.path,
-        srcs = " ".join([shell.quote(src.path) for src in srcs]),
-    )
+    args = [
+        toolchain.tinygo.path,
+        "build",
+        "-x",
+        "-o",
+        output.path,
+    ]
 
-    print(cmd)
+    if ctx.attr.target:
+        args += ["-target", ctx.attr.target]
+
+    args += [src.path for src in srcs]
+
+    print(args)
 
     sdk = ctx.attr.go_sdk[GoSDK]
 
@@ -28,14 +35,15 @@ def _tinygo_binary(ctx):
 
     ctx.actions.run(
         executable = ctx.executable._builder,
-        inputs = srcs + [toolchain.tinygo] + toolchain.srcs + toolchain.libs + [sdk.go] + sdk.srcs + sdk.tools,
-        arguments = [toolchain.tinygo.path, "build", "-x", "-o", output.path] + [src.path for src in srcs],
+        inputs = srcs + [toolchain.tinygo] + toolchain.srcs + toolchain.libs + toolchain.targets + [sdk.go] + sdk.srcs + sdk.tools,
+        arguments = args,
         outputs = [output],
         env = {
             "BUILDER_GOROOT": sdk.root_file.dirname,
             "HOME": "/tmp/tinygexp",
             "BUILDER_GOBIN_PATH": sdk.go.dirname,
             "BUILDER_TINYGOROOT": paths.dirname(paths.dirname(toolchain.tinygo.path)),
+            "WASMOPT": "/opt/homebrew/bin/wasm-opt",  # TODO quick hack for now
         },
     )
 
@@ -62,6 +70,9 @@ tinygo_binary = rule(
         "srcs": attr.label_list(
             allow_files = [".go"],
             doc = "Source files to compile.",
+        ),
+        "target": attr.string(
+            doc = "Target architecture.",
         ),
         "go_sdk": attr.label(
             doc = "Go SDK to use.",
