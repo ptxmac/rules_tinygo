@@ -1,0 +1,26 @@
+name: Build
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mount bazel cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ~/.cache/bazel
+          # key: ${{ runner.os }}-bazel-${{ hashFiles('.bazelversion', '.bazelrc', 'WORKSPACE', 'WORKSPACE.bazel', 'MODULE.bazel') }}
+          key: ${{ runner.os }}-bazel
+      - name: Run Build
+        run: bazel build //...
+      - name: Store bazel cache
+        uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: ~/.cache/bazel
+          key: ${{ runner.os }}-bazel
