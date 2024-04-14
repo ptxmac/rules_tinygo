@@ -16,26 +16,37 @@ http_archive(
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk", "go_register_toolchains", "go_rules_dependencies")
 
-go_download_sdk(
-    name = "go_sdk_1_21_7",
-    goarch = "arm64",
-    goos = "darwin",
-    version = "1.21.7",
-)
-
 go_rules_dependencies()
 
-go_register_toolchains()
+go_register_toolchains(
+    version = "1.22.2",
+)
 
 ## tinygo testing
 load("@rules_tinygo//:deps.bzl", "tinygo_download")
 
+TINYGO_VERSION = "0.31.2"
+
 tinygo_download(
-    name = "tinygo_darwin_x86_64",
-    sha256 = "6767934acc2d0a1b29b110de098dcf056b8cca1ce2737f01bc137c5d1f4f1ad7",
-    urls = ["https://github.com/tinygo-org/tinygo/releases/download/v0.30.0/tinygo0.30.0.darwin-amd64.tar.gz"],
+    name = "tinygo_darwin_amd64",
+    sha256 = "73c185beceefdb627b7349dd945757f3b30f9e4cee0f085e36a8f965c94e9dda",
+    urls = ["https://github.com/tinygo-org/tinygo/releases/download/v{0}/tinygo{0}.darwin-amd64.tar.gz".format(TINYGO_VERSION)],
+)
+
+tinygo_download(
+    name = "tinygo_darwin_arm64",
+    sha256 = "5b9ff15881bd23eb44ccd0e6c917db11e65c5532d654fc7198e6f6289aa0449d",
+    urls = ["https://github.com/tinygo-org/tinygo/releases/download/v{0}/tinygo{0}.darwin-arm64.tar.gz".format(TINYGO_VERSION)],
+)
+
+tinygo_download(
+    name = "tinygo_linux_amd64",
+    sha256 = "48a83ae9efe619124d2ecac8aba0b039ea8dabf07765b1df26692b63cfd8fab8",
+    urls = ["https://github.com/tinygo-org/tinygo/releases/download/v{0}/tinygo{0}.linux-amd64.tar.gz".format(TINYGO_VERSION)],
 )
 
 register_toolchains(
-    "@tinygo_darwin_x86_64//:toolchain",
+    "@tinygo_darwin_amd64//:toolchain_darwin_amd64",
+    "@tinygo_darwin_arm64//:toolchain_darwin_arm64",
+    "@tinygo_linux_amd64//:toolchain_linux_amd64",
 )

@@ -4,6 +4,7 @@ def _tinygo_download_impl(ctx):
         ctx.attr.urls,
         sha256 = ctx.attr.sha256,
         stripPrefix = "tinygo",
+        canonical_id = " ".join(ctx.attr.urls),
     )
 
     ctx.template(
