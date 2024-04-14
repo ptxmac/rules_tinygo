@@ -23,9 +23,11 @@ go_register_toolchains(
 )
 
 ## tinygo testing
-load("@rules_tinygo//:deps.bzl", "tinygo_download")
+load("@rules_tinygo//:deps.bzl", "binaryen_download", "tinygo_download")
 
 TINYGO_VERSION = "0.31.2"
+
+BINARYEN_VERSION = "117"
 
 tinygo_download(
     name = "tinygo_darwin_amd64",
@@ -45,8 +47,24 @@ tinygo_download(
     urls = ["https://github.com/tinygo-org/tinygo/releases/download/v{0}/tinygo{0}.linux-amd64.tar.gz".format(TINYGO_VERSION)],
 )
 
+binaryen_download(
+    name = "binaryen_darwin_arm64",
+    prefix = "binaryen-version_{0}".format(BINARYEN_VERSION),
+    sha256 = "f2d962ff294b38ea3cfbbae8f6c728089d9375a57bac9a1880eb86779d6d3a84",
+    urls = ["https://github.com/WebAssembly/binaryen/releases/download/version_{0}/binaryen-version_{0}-arm64-macos.tar.gz".format(BINARYEN_VERSION)],
+)
+
+binaryen_download(
+    name = "binaryen_linux_amd64",
+    prefix = "binaryen-version_{0}".format(BINARYEN_VERSION),
+    sha256 = "3dc677006555b355ea2da5e82602065a161d5e83eaefd3f759afa00b96e83212",
+    urls = ["https://github.com/WebAssembly/binaryen/releases/download/version_{0}/binaryen-version_{0}-x86_64-linux.tar.gz".format(BINARYEN_VERSION)],
+)
+
 register_toolchains(
     "@tinygo_darwin_amd64//:toolchain_darwin_amd64",
     "@tinygo_darwin_arm64//:toolchain_darwin_arm64",
     "@tinygo_linux_amd64//:toolchain_linux_amd64",
+    "@binaryen_darwin_arm64//:binaryen_darwin_arm64",
+    "@binaryen_linux_amd64//:binaryen_linux_amd64",
 )

@@ -1,15 +1,20 @@
+load("@bazel_skylib//lib:paths.bzl", "paths")
 load("@bazel_skylib//lib:shell.bzl", "shell")
 load("@io_bazel_rules_go//go:def.bzl", "GoSDK")
-load("@bazel_skylib//lib:paths.bzl", "paths")
 
 def _tinygo_binary(ctx):
     srcs = ctx.files.srcs
+
+    binaryen = ctx.toolchains["@rules_tinygo//:binaryen_type"]
+
+    print("binaryen", binaryen.wasm_opt)
 
     output_path = "{name}_/{name}".format(name = ctx.label.name)
     output = ctx.actions.declare_file(output_path)
     print("hello from tinygo_binary", srcs, output)
 
     toolchain = ctx.toolchains["@rules_tinygo//:toolchain_type"]
+    print("tinygo", toolchain.tinygo)
 
     args = [
         toolchain.tinygo.path,
@@ -35,7 +40,17 @@ def _tinygo_binary(ctx):
 
     ctx.actions.run(
         executable = ctx.executable._builder,
-        inputs = srcs + [toolchain.tinygo] + toolchain.srcs + toolchain.libs + toolchain.targets + [sdk.go] + sdk.srcs + sdk.tools,
+        inputs = (
+            srcs +
+            [toolchain.tinygo] +
+            toolchain.srcs +
+            toolchain.libs +
+            toolchain.targets +
+            [sdk.go] +
+            sdk.srcs +
+            sdk.tools +
+            [binaryen.wasm_opt]
+        ),
         arguments = args,
         outputs = [output],
         env = {
@@ -43,7 +58,7 @@ def _tinygo_binary(ctx):
             "HOME": "/tmp/tinygexp",
             "BUILDER_GOBIN_PATH": sdk.go.dirname,
             "BUILDER_TINYGOROOT": paths.dirname(paths.dirname(toolchain.tinygo.path)),
-            "WASMOPT": "/opt/homebrew/bin/wasm-opt",  # TODO quick hack for now
+            "WASMOPT": binaryen.wasm_opt.path,
         },
     )
 
@@ -85,5 +100,8 @@ tinygo_binary = rule(
         ),
     },
     executable = True,
-    toolchains = ["@rules_tinygo//:toolchain_type"],
+    toolchains = [
+        "@rules_tinygo//:toolchain_type",
+        "@rules_tinygo//:binaryen_type",
+    ],
 )
