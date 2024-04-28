@@ -1,8 +1,16 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_test")
 load("@rules_tinygo//:def.bzl", "tinygo_binary")
 
 tinygo_binary(
-    name = "hello.wasi",
+    name = "hello_wasi",
     srcs = ["hello.go"],
+    out = "hello.wasi",
     go_sdk = "@go_sdk//:go_sdk",
     target = "wasi",
+)
+
+go_test(
+    name = "hello_test",
+    srcs = ["hello_test.go"],
+    data = [":hello_wasi"],
 )

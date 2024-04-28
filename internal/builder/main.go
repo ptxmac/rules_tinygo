@@ -7,7 +7,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"sort"
 )
 
 func main() {
@@ -16,28 +15,12 @@ func main() {
 	}
 }
 func run() error {
-	log.Println("ARGS: ", len(os.Args))
-
-	for i, arg := range os.Args {
-		log.Printf("ARG[%d]: %s", i, arg)
-	}
-
-	env := os.Environ()
-	sort.Strings(env)
-
-	log.Println("ENV: ", len(env))
-
-	for i, e := range env {
-		log.Printf("ENV[%d]: %s", i, e)
-	}
 
 	path := os.Getenv("BUILDER_GOBIN_PATH")
 	abs, err := filepath.Abs(path)
 	if err != nil {
 		return err
 	}
-
-	//tree()
 
 	cmd := exec.Command(os.Args[1], os.Args[2:]...)
 	cmd.Stdout = os.Stdout
