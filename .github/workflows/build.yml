@@ -18,6 +18,8 @@ jobs:
           key: ${{ runner.os }}-bazel
       - name: Run Build
         run: bazel build //...
+      - name: Run Tests
+        run: bazel test //...
       - name: Store bazel cache
         uses: actions/cache/save@v4
         if: always()
