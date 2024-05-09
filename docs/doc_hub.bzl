@@ -21,7 +21,7 @@ Start by loading the rules:
 git_repository(
     name = "rules_tinygo",
     commit = "0677286b5a5ceeb077044019152f5e72b23c37c9",
-    remote = "git@github.com:ptxmac/rules_tinygo.git",
+    remote = "https://github.com/ptxmac/rules_tinygo.git",
 )
 ```
 
