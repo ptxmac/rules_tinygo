@@ -18,12 +18,10 @@ In `WORKSPACE`:
 
 Start by loading the rules:
 
-> [!todo] Fix this
-
 ```bazel
 git_repository(
     name = "rules_tinygo",
-    commit = "6fe6e96ba3684e9adee73526dc8fdda1fe35e2af",
+    commit = "0677286b5a5ceeb077044019152f5e72b23c37c9",
     remote = "git@github.com:ptxmac/rules_tinygo.git",
 )
 ```
