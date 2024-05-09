@@ -12,6 +12,7 @@ def _binaryen_download_impl(ctx):
     )
 
 binaryen_download = repository_rule(
+    doc = "Downloads and extracts the Binaryen tools.",
     implementation = _binaryen_download_impl,
     attrs = {
         "urls": attr.string_list(mandatory = True),
