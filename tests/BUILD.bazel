@@ -5,7 +5,6 @@ tinygo_binary(
     name = "hello_wasi",
     srcs = ["hello.go"],
     out = "hello.wasi",
-    go_sdk = "@go_sdk//:go_sdk",
     target = "wasi",
 )
 

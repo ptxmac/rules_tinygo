@@ -52,6 +52,7 @@ def _tinygo_binary(ctx):
 
 tinygo_binary = rule(
     implementation = _tinygo_binary,
+    doc = "Compiles a Go binary using TinyGo.",
     attrs = {
         "srcs": attr.label_list(
             allow_files = [".go"],
@@ -65,9 +66,10 @@ tinygo_binary = rule(
         ),
         "go_sdk": attr.label(
             doc = "Go SDK to use.",
+            default = Label("@go_sdk//:go_sdk"),
         ),
         "_builder": attr.label(
-            default = Label("@rules_tinygo//internal/builder:builder"),
+            default = Label("@rules_tinygo//tinygo/builder:builder"),
             allow_single_file = True,
             executable = True,
             cfg = "exec",

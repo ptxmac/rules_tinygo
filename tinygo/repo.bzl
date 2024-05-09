@@ -18,7 +18,7 @@ tinygo_download = repository_rule(
         "urls": attr.string_list(mandatory = True),
         "sha256": attr.string(mandatory = True),
         "_build_tpl": attr.label(
-            default = "@rules_tinygo//internal:BUILD.dist.bazel.tpl",
+            default = "@rules_tinygo//tinygo:BUILD.dist.bazel.tpl",
         ),
     },
 )
