@@ -68,7 +68,7 @@ tinygo_binary = rule(
             # mandatory = True,
             doc = "Go SDK to use.",
             providers = [GoSDK],
-            default = Label("@go_sdk//:go_sdk"),
+            default = Label("@go_default_sdk//:go_sdk"),
         ),
         "_builder": attr.label(
             default = Label("@rules_tinygo//tinygo/builder:builder"),
