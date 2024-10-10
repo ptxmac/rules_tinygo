@@ -43,6 +43,7 @@ bzl_library(
     name = "defs",
     srcs = ["defs.bzl"],
     visibility = ["//visibility:public"],
+    deps = ["//tinygo/private:rules"],
 )
 
 bzl_library(

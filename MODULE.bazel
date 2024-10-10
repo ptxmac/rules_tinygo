@@ -8,14 +8,28 @@ module(
 
 bazel_dep(name = "bazel_skylib", version = "1.4.1")
 bazel_dep(name = "platforms", version = "0.0.5")
+bazel_dep(name = "gazelle", version = "0.35.0", repo_name = "bazel_gazelle")
 
-bazel_dep(name = "gazelle", version = "0.35.0", dev_dependency = True, repo_name = "bazel_gazelle")
+#bazel_dep(name = "gazelle", version = "0.35.0", dev_dependency = True, repo_name = "bazel_gazelle")
 bazel_dep(name = "bazel_skylib_gazelle_plugin", version = "1.4.1", dev_dependency = True)
 bazel_dep(name = "aspect_bazel_lib", version = "1.32.1", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "6.1.2", dev_dependency = True)
 
+# bazel_dep(name = "rules_go", version = "0.50.1", dev_dependency = True)
+bazel_dep(name = "rules_go", version = "0.50.1")
+
+go_sdk = use_extension("@rules_go//go:extensions.bzl", "go_sdk")
+go_sdk.download(version = "1.23.2")
+use_repo(go_sdk, "go_default_sdk")
+
+binaryen = use_extension("//binaryen:extensions.bzl", "binaryen")
+binaryen.toolchain(binaryen_version = "117")
+use_repo(binaryen, "binaryen_toolchains")
+
+register_toolchains("@binaryen_toolchains//:all")
+
 tinygo = use_extension("//tinygo:extensions.bzl", "tinygo")
-tinygo.toolchain(tinygo_version = "1.14.2")
+tinygo.toolchain(tinygo_version = "0.31.2")
 use_repo(tinygo, "tinygo_toolchains")
 
 register_toolchains("@tinygo_toolchains//:all")

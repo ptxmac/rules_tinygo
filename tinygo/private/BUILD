@@ -17,3 +17,10 @@ bzl_library(
     srcs = ["resolved_toolchain.bzl"],
     visibility = ["//tinygo:__subpackages__"],
 )
+
+bzl_library(
+    name = "rules",
+    srcs = ["rules.bzl"],
+    visibility = ["//tinygo:__subpackages__"],
+    deps = ["@rules_go//go:def"],
+)
