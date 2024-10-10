@@ -1,3 +1,5 @@
+"""Binaryen toolchain"""
+
 def _binary_toolchain_impl(ctx):
     # find wasm-opt
     wasm_opt = None

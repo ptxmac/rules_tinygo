@@ -1,4 +1,4 @@
-bazel-bin
-bazel-testlogs
-bazel-out
-bazel-rules_tinygo
+bazel-*
+.bazelrc.user
+.idea/
+.ijwb/

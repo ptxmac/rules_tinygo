@@ -1,14 +1,11 @@
-toolchain_type(
-    name = "toolchain_type",
-    visibility = ["//visibility:public"],
+load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_binary")
+
+gazelle_binary(
+    name = "gazelle_bin",
+    languages = ["@bazel_skylib_gazelle_plugin//bzl"],
 )
 
-toolchain_type(
-    name = "binaryen_type",
-    visibility = ["//visibility:public"],
-)
-
-exports_files(
-    ["README.md"],
-    visibility = ["//visibility:public"],
+gazelle(
+    name = "gazelle",
+    gazelle = "gazelle_bin",
 )

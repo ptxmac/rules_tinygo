@@ -6,7 +6,6 @@ import (
 )
 
 func TestHello(t *testing.T) {
-
 	bs, err := os.ReadFile("hello.wasi")
 	if err != nil {
 		t.Fatal(err)
