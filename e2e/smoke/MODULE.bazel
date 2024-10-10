@@ -1,5 +1,6 @@
 bazel_dep(name = "rules_tinygo", version = "0.0.0", dev_dependency = True)
 bazel_dep(name = "bazel_skylib", version = "1.7.1", dev_dependency = True)
+bazel_dep(name = "rules_go", version = "0.50.1", dev_dependency = True)
 
 local_path_override(
     module_name = "rules_tinygo",
