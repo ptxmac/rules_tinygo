@@ -10,6 +10,7 @@ def _tinygo_binary(ctx):
 
     binaryen = ctx.toolchains["@rules_tinygo//binaryen:toolchain_type"]
     toolchain = ctx.toolchains["@rules_tinygo//tinygo:toolchain_type"]
+
     args = [
         toolchain.tinygo,
         "build",
@@ -17,8 +18,6 @@ def _tinygo_binary(ctx):
         "-o",
         ctx.outputs.out.path,
     ]
-
-    print(args)
 
     if ctx.attr.target:
         args += ["-target", ctx.attr.target]
@@ -29,6 +28,7 @@ def _tinygo_binary(ctx):
     ctx.actions.run(
         executable = ctx.executable._builder,
         inputs = (
+            toolchain.tool_files +
             srcs +
             toolchain.srcs +
             toolchain.libs +

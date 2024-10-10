@@ -133,7 +133,7 @@
     },
     "//tinygo:extensions.bzl%tinygo": {
       "general": {
-        "bzlTransitiveDigest": "VjnMKzOG+NAZAOxttuAPBHbzs0stTMj/Cq4q5XYalTg=",
+        "bzlTransitiveDigest": "Pusw/jA3oDcZ5WvWTmsPeWIBscltF9RINPhyTq09GD0=",
         "usagesDigest": "Mrkkeq3TnWhuhE8xyWXBZI7o+H1BwJzDi4Mu7j40NYo=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

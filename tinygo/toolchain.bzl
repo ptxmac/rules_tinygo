@@ -8,16 +8,19 @@ def _to_manifest_path(ctx, file):
         return ctx.workspace_name + "/" + file.short_path
 
 def _tinygo_toolchain_impl(ctx):
+    tool_files = []
     tinygo_cmd = None
 
     for f in ctx.files.tools:
         if f.path.endswith("bin/tinygo"):
+            tool_files.append(f)
             tinygo_cmd = _to_manifest_path(ctx, f)
             break
     if not tinygo_cmd:
         fail("tinygo not found in tools")
 
     return [platform_common.ToolchainInfo(
+        tool_files = tool_files,
         tinygo = tinygo_cmd,
         srcs = ctx.files.srcs,
         targets = ctx.files.targets,

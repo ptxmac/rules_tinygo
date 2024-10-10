@@ -1,3 +1,5 @@
+"""Toolchain repo"""
+
 PLATFORMS = {
     "arm64-macos": struct(
         compatible_with = [
