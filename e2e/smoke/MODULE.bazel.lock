@@ -87,19 +87,19 @@
     "@@apple_support~//crosstool:setup.bzl%apple_cc_configure_extension": {
       "general": {
         "bzlTransitiveDigest": "PjIds3feoYE8SGbbIq2SFTZy3zmxeO2tQevJZNDo7iY=",
-        "usagesDigest": "aLmqbvowmHkkBPve05yyDNGN7oh7QE9kBADr3QIZTZs=",
+        "usagesDigest": "+hz7IHWN6A1oVJJWNDB6yZRG+RYhF76wAYItpAeIUIg=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "local_config_apple_cc": {
-            "bzlFile": "@@apple_support~//crosstool:setup.bzl",
-            "ruleClassName": "_apple_cc_autoconf",
-            "attributes": {}
-          },
           "local_config_apple_cc_toolchains": {
             "bzlFile": "@@apple_support~//crosstool:setup.bzl",
             "ruleClassName": "_apple_cc_autoconf_toolchains",
+            "attributes": {}
+          },
+          "local_config_apple_cc": {
+            "bzlFile": "@@apple_support~//crosstool:setup.bzl",
+            "ruleClassName": "_apple_cc_autoconf",
             "attributes": {}
           }
         },
@@ -115,7 +115,7 @@
     "@@platforms//host:extension.bzl%host_platform": {
       "general": {
         "bzlTransitiveDigest": "xelQcPZH8+tmuOHVjL9vDxMnnQNMlwj0SlvgoqBkm4U=",
-        "usagesDigest": "V1R2Y2oMxKNfx2WCWpSCaUV1WefW1o8HZGm3v1vHgY4=",
+        "usagesDigest": "hgylFkgWSg0ulUwWZzEM1aIftlUnbmw2ynWLdEfHnZc=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -131,19 +131,12 @@
     },
     "@@rules_tinygo~//binaryen:extensions.bzl%binaryen": {
       "general": {
-        "bzlTransitiveDigest": "zMDPCDtbiWD2B8n+Bc77t4p343RSY8woO9BhkW1IfAw=",
-        "usagesDigest": "8dUjEjkMzhE2XSr41dIl3evdpCZa0YVQ9myrytcz9EI=",
+        "bzlTransitiveDigest": "/pTxlQtm7z43ExUrSDRt413Sem4ieIzGj3rpJww4vBE=",
+        "usagesDigest": "SGxE8opA78TXyB7+z+HJiX6BByYGA+xzwQxUPW4hQoM=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
-          "binaryen_toolchains": {
-            "bzlFile": "@@rules_tinygo~//binaryen/private:toolchains_repo.bzl",
-            "ruleClassName": "toolchains_repo",
-            "attributes": {
-              "user_repository_name": "binaryen"
-            }
-          },
           "binaryen_arm64-macos": {
             "bzlFile": "@@rules_tinygo~//binaryen:repositories.bzl",
             "ruleClassName": "binaryen_repositories",
@@ -159,6 +152,21 @@
               "platform": "x86_64-linux",
               "binaryen_version": "117"
             }
+          },
+          "binaryen_aarch64-linux": {
+            "bzlFile": "@@rules_tinygo~//binaryen:repositories.bzl",
+            "ruleClassName": "binaryen_repositories",
+            "attributes": {
+              "platform": "aarch64-linux",
+              "binaryen_version": "117"
+            }
+          },
+          "binaryen_toolchains": {
+            "bzlFile": "@@rules_tinygo~//binaryen/private:toolchains_repo.bzl",
+            "ruleClassName": "toolchains_repo",
+            "attributes": {
+              "user_repository_name": "binaryen"
+            }
           }
         },
         "recordedRepoMappingEntries": []
@@ -166,25 +174,26 @@
     },
     "@@rules_tinygo~//tinygo:extensions.bzl%tinygo": {
       "general": {
-        "bzlTransitiveDigest": "Pusw/jA3oDcZ5WvWTmsPeWIBscltF9RINPhyTq09GD0=",
-        "usagesDigest": "gYdX1M+ZHvtjz9lzi18k8R9cn7M0GtS8BCjXQMSbVFk=",
+        "bzlTransitiveDigest": "GUoDVPmVXiWmB+kiDP7ej/Diq53XxcLKRQp7AXJvgio=",
+        "usagesDigest": "GGNR2KiiA7dvOAmy2QQQaLqtrW2NHHDgL5Af3H85F0c=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
         "generatedRepoSpecs": {
+          "tinygo_darwin-amd64": {
+            "bzlFile": "@@rules_tinygo~//tinygo:repositories.bzl",
+            "ruleClassName": "tinygo_repositories",
+            "attributes": {
+              "platform": "darwin-amd64",
+              "tinygo_version": "0.31.2"
+            }
+          },
           "tinygo_darwin-arm64": {
             "bzlFile": "@@rules_tinygo~//tinygo:repositories.bzl",
             "ruleClassName": "tinygo_repositories",
             "attributes": {
               "platform": "darwin-arm64",
               "tinygo_version": "0.31.2"
-            }
-          },
-          "tinygo_toolchains": {
-            "bzlFile": "@@rules_tinygo~//tinygo/private:toolchains_repo.bzl",
-            "ruleClassName": "toolchains_repo",
-            "attributes": {
-              "user_repository_name": "tinygo"
             }
           },
           "tinygo_linux-amd64": {
@@ -195,12 +204,19 @@
               "tinygo_version": "0.31.2"
             }
           },
-          "tinygo_darwin-amd64": {
+          "tinygo_linux-arm64": {
             "bzlFile": "@@rules_tinygo~//tinygo:repositories.bzl",
             "ruleClassName": "tinygo_repositories",
             "attributes": {
-              "platform": "darwin-amd64",
+              "platform": "linux-arm64",
               "tinygo_version": "0.31.2"
+            }
+          },
+          "tinygo_toolchains": {
+            "bzlFile": "@@rules_tinygo~//tinygo/private:toolchains_repo.bzl",
+            "ruleClassName": "toolchains_repo",
+            "attributes": {
+              "user_repository_name": "tinygo"
             }
           }
         },

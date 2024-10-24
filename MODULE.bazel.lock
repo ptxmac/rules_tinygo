@@ -98,7 +98,7 @@
   "moduleExtensions": {
     "//binaryen:extensions.bzl%binaryen": {
       "general": {
-        "bzlTransitiveDigest": "zMDPCDtbiWD2B8n+Bc77t4p343RSY8woO9BhkW1IfAw=",
+        "bzlTransitiveDigest": "Pj02E0WCQQS6jhaGdWo7os5OXmFPNASgaOudXmJJ7AU=",
         "usagesDigest": "U2TjmUgS95e5/LweONN5pb57T2RJQ6+vX/PIrqMZxGk=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -133,7 +133,7 @@
     },
     "//tinygo:extensions.bzl%tinygo": {
       "general": {
-        "bzlTransitiveDigest": "Pusw/jA3oDcZ5WvWTmsPeWIBscltF9RINPhyTq09GD0=",
+        "bzlTransitiveDigest": "JKGSDplGYmHuTQ8DVkIVEvVQkpfTbIhdlUPjcQjShOU=",
         "usagesDigest": "Mrkkeq3TnWhuhE8xyWXBZI7o+H1BwJzDi4Mu7j40NYo=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},

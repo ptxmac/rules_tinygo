@@ -38,6 +38,12 @@ PLATFORMS = {
             "@platforms//cpu:x86_64",
         ],
     ),
+    "linux-arm64": struct(
+        compatible_with = [
+            "@platforms//os:linux",
+            "@platforms//cpu:aarch64",
+        ],
+    ),
 }
 
 def _toolchains_repo_impl(repository_ctx):
