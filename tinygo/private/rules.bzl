@@ -34,8 +34,8 @@ def _tinygo_binary(ctx):
             toolchain.libs +
             toolchain.targets +
             [sdk.go] +
-            sdk.srcs +
-            sdk.tools +
+            sdk.srcs.to_list() +
+            sdk.tools.to_list() +
             [binaryen.wasm_opt]
         ),
         arguments = args,
