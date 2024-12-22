@@ -22,13 +22,13 @@ go_sdk.download(version = "1.23.4")
 use_repo(go_sdk, "go_default_sdk")
 
 binaryen = use_extension("//binaryen:extensions.bzl", "binaryen")
-binaryen.toolchain(binaryen_version = "117")
+binaryen.toolchain(binaryen_version = "121")
 use_repo(binaryen, "binaryen_toolchains")
 
 register_toolchains("@binaryen_toolchains//:all")
 
 tinygo = use_extension("//tinygo:extensions.bzl", "tinygo")
-tinygo.toolchain(tinygo_version = "0.31.2")
+tinygo.toolchain(tinygo_version = "0.35.0")
 use_repo(tinygo, "tinygo_toolchains")
 
 register_toolchains("@tinygo_toolchains//:all")

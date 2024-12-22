@@ -102,8 +102,8 @@
   "moduleExtensions": {
     "//binaryen:extensions.bzl%binaryen": {
       "general": {
-        "bzlTransitiveDigest": "/pTxlQtm7z43ExUrSDRt413Sem4ieIzGj3rpJww4vBE=",
-        "usagesDigest": "U2TjmUgS95e5/LweONN5pb57T2RJQ6+vX/PIrqMZxGk=",
+        "bzlTransitiveDigest": "B5KznPHrMEF7MpixDdRiTc3VmVn49xnGj6dVh03gDOc=",
+        "usagesDigest": "jee33UTU5C5zdjrx9SiCL3E7w4ctGFpyzHfRkhPl7qE=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -120,7 +120,7 @@
             "ruleClassName": "binaryen_repositories",
             "attributes": {
               "platform": "arm64-macos",
-              "binaryen_version": "117"
+              "binaryen_version": "121"
             }
           },
           "binaryen_x86_64-linux": {
@@ -128,7 +128,7 @@
             "ruleClassName": "binaryen_repositories",
             "attributes": {
               "platform": "x86_64-linux",
-              "binaryen_version": "117"
+              "binaryen_version": "121"
             }
           },
           "binaryen_aarch64-linux": {
@@ -136,7 +136,7 @@
             "ruleClassName": "binaryen_repositories",
             "attributes": {
               "platform": "aarch64-linux",
-              "binaryen_version": "117"
+              "binaryen_version": "121"
             }
           }
         },
@@ -145,8 +145,8 @@
     },
     "//tinygo:extensions.bzl%tinygo": {
       "general": {
-        "bzlTransitiveDigest": "f1t06Hgv5HOAPmKjj4l1/J+7+/Y1e8yAxdWKFsdHpC0=",
-        "usagesDigest": "Mrkkeq3TnWhuhE8xyWXBZI7o+H1BwJzDi4Mu7j40NYo=",
+        "bzlTransitiveDigest": "XrV0tkqjQ7v0OZ1ffzxNOWi29Va7f+HzDMXO/Ry4IAA=",
+        "usagesDigest": "y4ZBs5kZEoFakEVCT2VCytq8RHZx0Ky+sWTWacOaonU=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
         "envVariables": {},
@@ -156,7 +156,7 @@
             "ruleClassName": "tinygo_repositories",
             "attributes": {
               "platform": "darwin-arm64",
-              "tinygo_version": "0.31.2"
+              "tinygo_version": "0.35.0"
             }
           },
           "tinygo_toolchains": {
@@ -171,7 +171,7 @@
             "ruleClassName": "tinygo_repositories",
             "attributes": {
               "platform": "linux-arm64",
-              "tinygo_version": "0.31.2"
+              "tinygo_version": "0.35.0"
             }
           },
           "tinygo_linux-amd64": {
@@ -179,7 +179,7 @@
             "ruleClassName": "tinygo_repositories",
             "attributes": {
               "platform": "linux-amd64",
-              "tinygo_version": "0.31.2"
+              "tinygo_version": "0.35.0"
             }
           },
           "tinygo_darwin-amd64": {
@@ -187,7 +187,7 @@
             "ruleClassName": "tinygo_repositories",
             "attributes": {
               "platform": "darwin-amd64",
-              "tinygo_version": "0.31.2"
+              "tinygo_version": "0.35.0"
             }
           }
         },

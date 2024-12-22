@@ -37,6 +37,15 @@ binaryen_repositories = repository_rule(
 )
 
 def binaryen_register_toolchains(name, register = True, **kwargs):
+    """
+    Register binaryen toolchains for all platforms.
+
+    Args:
+      name: The base name of the repos.
+      register: Whether to register the toolchains using native.register_toolchains.
+        Should be true only for WORKSPACE usage.
+      **kwargs: Additional arguments to pass to binaryen_repositories.
+    """
     for platform in PLATFORMS:
         binaryen_repositories(
             name = name + "_" + platform,
@@ -44,7 +53,6 @@ def binaryen_register_toolchains(name, register = True, **kwargs):
             **kwargs
         )
         if register:
-            print("todo, register")
             native.register_toolchains("@%s_toolchains//:%s_toolchain" % (name, platform))
 
     toolchains_repo(
