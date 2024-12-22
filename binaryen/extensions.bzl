@@ -1,3 +1,7 @@
+"""
+Extensions for bzlmod.
+"""
+
 load(":repositories.bzl", "binaryen_register_toolchains")
 
 _DEFAULT_NAME = "binaryen"
@@ -25,6 +29,7 @@ def _toolchain_extension(module_ctx):
         if len(versions) > 1:
             selected = sorted(versions, reverse = True)[0]
 
+            # buildifier: disable=print
             print("NOTE: binaryen toolchain {} has multiple versions {}, selected {}".format(name, versions, selected))
         else:
             selected = versions[0]
