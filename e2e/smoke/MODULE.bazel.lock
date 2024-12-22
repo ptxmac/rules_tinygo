@@ -256,7 +256,7 @@
     },
     "@@rules_tinygo+//binaryen:extensions.bzl%binaryen": {
       "general": {
-        "bzlTransitiveDigest": "FQZTbUdxZCIgHpQRSTWZPhkQxYlGfZU8MCjyx6JVDkQ=",
+        "bzlTransitiveDigest": "B5KznPHrMEF7MpixDdRiTc3VmVn49xnGj6dVh03gDOc=",
         "usagesDigest": "uL7SAbxiI76WzbET38DS0rQS0uuYmEbUt4liFqWMR58=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
@@ -295,7 +295,7 @@
     },
     "@@rules_tinygo+//tinygo:extensions.bzl%tinygo": {
       "general": {
-        "bzlTransitiveDigest": "GEp1EbGyup6QBywm8xta1IBeB5yCxno//+2PXuMBXW8=",
+        "bzlTransitiveDigest": "ZMBU6sTAMqitEVKZHVLt0TWrC2URiaDrAOT+t7+PCyE=",
         "usagesDigest": "RPvkeL1lQhgS/ZRtJ7Z6JAx9lyxCvtAoABh6xsLfeB8=",
         "recordedFileInputs": {},
         "recordedDirentsInputs": {},
