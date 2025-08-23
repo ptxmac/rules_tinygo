@@ -1,0 +1,18 @@
+repo: WebAssembly/binaryen
+versions:
+  - "117"
+  - "121"
+release_mapping: version_{version}
+asset_mapping:
+  aarch64-linux: binaryen-version_(.+)-aarch64-linux.tar.gz$
+  arm64-macos: binaryen-version_(.+)-arm64-macos.tar.gz$
+  x86_64-linux: binaryen-version_(.+)-x86_64-linux.tar.gz$
+cache:
+  "117":
+    binaryen-version_117-aarch64-linux.tar.gz: sha384-jNlDOlY9P1XSBG3MShpEH5ukoUMVaHqsHB7zvwo7QCxBEhzCPNqnskkUlWsCy/W2
+    binaryen-version_117-arm64-macos.tar.gz: sha384-oj2uzwzUVNLLM/01edDcBiGJfCnAcSPXQM9aMWK7+NibrF0vChh3o6Bhd1zzGnWc
+    binaryen-version_117-x86_64-linux.tar.gz: sha384-MI3PjWKAVVP9+ssV79VtPhSUJmffZTt8gTw8vFvQTu5yAzeojI1T3J26yQHFQyws
+  "121":
+    binaryen-version_121-aarch64-linux.tar.gz: sha384-Ut9P/2KQgWPQD35QtKDhwOu8RnnRzkiA0eqAIS03V7VLJ4jrA+8v07d5540fSq+v
+    binaryen-version_121-arm64-macos.tar.gz: sha384-j/vK98o7At5VKML7+tFrMsfu9WelbacX8XympFHJzbqEvUErz4wjI054ktxou1tq
+    binaryen-version_121-x86_64-linux.tar.gz: sha384-j6V8YUuVvzl89/D9lpIpfH4dVVcfjNPnDptu38WNH3HlBwu23BbADgLgacxCLo8u

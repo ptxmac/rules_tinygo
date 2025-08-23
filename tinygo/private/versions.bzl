@@ -1,9 +1,5 @@
-"""Mirror of release info
+"""SHAs for tinygo"""
 
-TODO: generate this file from GitHub API"""
-
-# The integrity hashes can be computed with
-# shasum -b -a 384 [downloaded file] | awk '{ print $1 }' | xxd -r -p | base64
 TOOL_VERSIONS = {
     "0.31.2": {
         "darwin-arm64": "sha384-mFeVQGh+vIb7Hz4issK0qfeVDeMIhw1XdFJtA3owfjczAd0UiydHvVQkR44qvZOQ",
@@ -11,7 +7,8 @@ TOOL_VERSIONS = {
         "linux-arm64": "sha384-4KYc4hHxeuL/Rt48n/IDc8r+xqWfWwZVFvuB4E41LToWt+P1N6Na17dAzLD0YOH/",
     },
     "0.35.0": {
-        "linux-amd64": "sha384-p3BAnBkR0xo7+n8qtOEna9xmUESBFSTh8u81+uKZ0c4aSHacgOW4ZxPeOAC78Rnt",
         "darwin-arm64": "sha384-Xyt1WbhDd92Zadb7Ku/YFxI0T8iKS0nqnp+HpYe914NNVSERL+2ZX1CjKBSA60ch",
+        "linux-amd64": "sha384-p3BAnBkR0xo7+n8qtOEna9xmUESBFSTh8u81+uKZ0c4aSHacgOW4ZxPeOAC78Rnt",
+        "linux-arm64": "sha384-eP5cRXwTUNe/u1hvV9Uk7Ul85sZOLZPhFkQOpVMRSBpgQQUOiSoFne8wYRm+RMV8",
     },
 }
