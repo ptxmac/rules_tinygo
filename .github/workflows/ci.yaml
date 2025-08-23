@@ -28,6 +28,7 @@ jobs:
       exclude: |
         [
           {"folder": ".", "bzlmodEnabled": false},
+          {"folder": ".", "bazelVersion": "8.0.0"},
           {"folder": "e2e/smoke", "bzlmodEnabled": false},
           {"folder": "e2e/smoke", "bazelVersion": "8.0.0"}
         ]
