@@ -2,6 +2,7 @@ repo: tinygo-org/tinygo
 versions:
   - 0.31.2
   - 0.35.0
+  - 0.39.0
 release_mapping: v{version}
 asset_mapping:
   darwin-arm64: tinygo(.+).darwin-arm64.tar.gz
@@ -16,3 +17,7 @@ cache:
     tinygo0.35.0.darwin-arm64.tar.gz: sha384-Xyt1WbhDd92Zadb7Ku/YFxI0T8iKS0nqnp+HpYe914NNVSERL+2ZX1CjKBSA60ch
     tinygo0.35.0.linux-amd64.tar.gz: sha384-p3BAnBkR0xo7+n8qtOEna9xmUESBFSTh8u81+uKZ0c4aSHacgOW4ZxPeOAC78Rnt
     tinygo0.35.0.linux-arm64.tar.gz: sha384-eP5cRXwTUNe/u1hvV9Uk7Ul85sZOLZPhFkQOpVMRSBpgQQUOiSoFne8wYRm+RMV8
+  0.39.0:
+    tinygo0.39.0.darwin-arm64.tar.gz: sha384-YZywVFCfTar+yd6d7IlWW518PTJUi0n11FUfO8h6fXorFxMxvrL3sW5CDj10Ts6E
+    tinygo0.39.0.linux-amd64.tar.gz: sha384-fv7Q2NWBsZT0YaxwaPsvx8ib/AvVYaS3GanOYZZdl8Koffb0kS/bTHSHVD0OOA7+
+    tinygo0.39.0.linux-arm64.tar.gz: sha384-YzSti1CVRxYGVhn5ihWLgCwGiZnR9M6bSl2AklXxX4XUqQGqsJ8JiLK5AMc+3D54
