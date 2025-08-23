@@ -28,7 +28,7 @@ jobs:
       exclude: |
         [
           {"folder": ".", "bzlmodEnabled": false},
-          {"folder": "e2e/smoke", "bzlmodEnabled": false}
+          {"folder": "e2e/smoke", "bzlmodEnabled": false, "bazelversion": "6.4.0"}
         ]
   # For branch protection settings, this job provides a "stable" name that can be used to gate PR merges
   # on "all matrix jobs were successful".
