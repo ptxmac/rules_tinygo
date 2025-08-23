@@ -22,7 +22,7 @@ go_sdk.download(version = "1.23.4")
 use_repo(go_sdk, "go_default_sdk")
 
 binaryen = use_extension("//binaryen:extensions.bzl", "binaryen")
-binaryen.toolchain(binaryen_version = "121")
+binaryen.toolchain(binaryen_version = "123")
 use_repo(binaryen, "binaryen_toolchains")
 
 register_toolchains("@binaryen_toolchains//:all")

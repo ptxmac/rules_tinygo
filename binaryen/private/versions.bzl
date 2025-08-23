@@ -11,4 +11,9 @@ TOOL_VERSIONS = {
         "arm64-macos": "sha384-j/vK98o7At5VKML7+tFrMsfu9WelbacX8XympFHJzbqEvUErz4wjI054ktxou1tq",
         "x86_64-linux": "sha384-j6V8YUuVvzl89/D9lpIpfH4dVVcfjNPnDptu38WNH3HlBwu23BbADgLgacxCLo8u",
     },
+    "123": {
+        "aarch64-linux": "sha384-gRHcVA3ixZu857DlrGkamJbWE73ec4mrq+e3SxF/EjV7wI7WRzHlSPEN3adzCb11",
+        "arm64-macos": "sha384-BNHNaw4V4C7VD9VW6+77+lgzns0LjZBEtMb/HpoH67xmZf7muEwXWgGUzDFMPKbk",
+        "x86_64-linux": "sha384-ChUj3KQRLPlMFzI4go6A43jQMp1Db7RiV3EH1aHO9MxPI3rXxIzl8ieHBlpIAF30",
+    },
 }

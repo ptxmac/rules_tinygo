@@ -2,6 +2,7 @@ repo: WebAssembly/binaryen
 versions:
   - "117"
   - "121"
+  - "123"
 release_mapping: version_{version}
 asset_mapping:
   aarch64-linux: binaryen-version_(.+)-aarch64-linux.tar.gz$
@@ -16,3 +17,7 @@ cache:
     binaryen-version_121-aarch64-linux.tar.gz: sha384-Ut9P/2KQgWPQD35QtKDhwOu8RnnRzkiA0eqAIS03V7VLJ4jrA+8v07d5540fSq+v
     binaryen-version_121-arm64-macos.tar.gz: sha384-j/vK98o7At5VKML7+tFrMsfu9WelbacX8XympFHJzbqEvUErz4wjI054ktxou1tq
     binaryen-version_121-x86_64-linux.tar.gz: sha384-j6V8YUuVvzl89/D9lpIpfH4dVVcfjNPnDptu38WNH3HlBwu23BbADgLgacxCLo8u
+  "123":
+    binaryen-version_123-aarch64-linux.tar.gz: sha384-gRHcVA3ixZu857DlrGkamJbWE73ec4mrq+e3SxF/EjV7wI7WRzHlSPEN3adzCb11
+    binaryen-version_123-arm64-macos.tar.gz: sha384-BNHNaw4V4C7VD9VW6+77+lgzns0LjZBEtMb/HpoH67xmZf7muEwXWgGUzDFMPKbk
+    binaryen-version_123-x86_64-linux.tar.gz: sha384-ChUj3KQRLPlMFzI4go6A43jQMp1Db7RiV3EH1aHO9MxPI3rXxIzl8ieHBlpIAF30
