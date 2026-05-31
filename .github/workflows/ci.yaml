@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   test:
-    uses: bazel-contrib/.github/.github/workflows/bazel.yaml@v7.2.3
+    uses: bazel-contrib/.github/.github/workflows/bazel.yaml@v7.6.0
     with:
       folders: |
         [
@@ -27,10 +27,8 @@ jobs:
         ]
       exclude: |
         [
-          {"folder": ".", "bzlmodEnabled": false},
-          {"folder": ".", "bazelVersion": "8.0.0"},
-          {"folder": "e2e/smoke", "bzlmodEnabled": false},
-          {"folder": "e2e/smoke", "bazelVersion": "8.0.0"}
+          {"folder": ".", "bazelversion": "8.0.0"},
+          {"folder": "e2e/smoke", "bazelversion": "8.0.0"}
         ]
   # For branch protection settings, this job provides a "stable" name that can be used to gate PR merges
   # on "all matrix jobs were successful".
