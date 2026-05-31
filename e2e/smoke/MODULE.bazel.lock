@@ -506,8 +506,8 @@
     },
     "@@rules_tinygo+//tinygo:extensions.bzl%tinygo": {
       "general": {
-        "bzlTransitiveDigest": "8KhLdTKvBbNcTmhVOVxpWuivAUrd8qdDYWLABxGKTR8=",
-        "usagesDigest": "09QHIWtGvM/AtSyXzRw6Kg368/MPOrC9DIKM+/yZJS8=",
+        "bzlTransitiveDigest": "Z80yDfnNrSOE6BtTa2yvKnIQ6r5uIDEEuVkiX+6iJkg=",
+        "usagesDigest": "Ui9xLpZ+6kFQIwK0MUf+cXpqTNRek6rF/YE+LPbsu2g=",
         "recordedInputs": [
           "REPO_MAPPING:rules_tinygo+,bazel_tools bazel_tools"
         ],
@@ -516,28 +516,28 @@
             "repoRuleId": "@@rules_tinygo+//tinygo:repositories.bzl%tinygo_repositories",
             "attributes": {
               "platform": "darwin-amd64",
-              "tinygo_version": "0.39.0"
+              "tinygo_version": "0.41.1"
             }
           },
           "tinygo_darwin-arm64": {
             "repoRuleId": "@@rules_tinygo+//tinygo:repositories.bzl%tinygo_repositories",
             "attributes": {
               "platform": "darwin-arm64",
-              "tinygo_version": "0.39.0"
+              "tinygo_version": "0.41.1"
             }
           },
           "tinygo_linux-amd64": {
             "repoRuleId": "@@rules_tinygo+//tinygo:repositories.bzl%tinygo_repositories",
             "attributes": {
               "platform": "linux-amd64",
-              "tinygo_version": "0.39.0"
+              "tinygo_version": "0.41.1"
             }
           },
           "tinygo_linux-arm64": {
             "repoRuleId": "@@rules_tinygo+//tinygo:repositories.bzl%tinygo_repositories",
             "attributes": {
               "platform": "linux-arm64",
-              "tinygo_version": "0.39.0"
+              "tinygo_version": "0.41.1"
             }
           },
           "tinygo_toolchains": {
