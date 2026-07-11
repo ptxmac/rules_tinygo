@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 )
 
 func main() {
@@ -51,10 +52,50 @@ func run() error {
 
 	cmd.Env = append(cmd.Env, fmt.Sprintf("TINYGOROOT=%s", tinyGoRoot))
 
+	if gomodDir := os.Getenv("BUILDER_GOMOD_DIR"); gomodDir != "" {
+		gomodDir, err = filepath.Abs(gomodDir)
+		if err != nil {
+			return err
+		}
+		if err := copyPackageSources(gomodDir); err != nil {
+			return err
+		}
+		cmd.Dir = gomodDir
+	}
+
 	if err := cmd.Run(); err != nil {
 		return err
 	}
 
+	return nil
+}
+
+func copyPackageSources(gomodDir string) error {
+	specs := os.Getenv("BUILDER_COPY_SPECS")
+	if specs == "" {
+		return nil
+	}
+	for _, spec := range strings.Split(specs, ",") {
+		parts := strings.SplitN(spec, "|", 2)
+		if len(parts) != 2 {
+			return fmt.Errorf("invalid BUILDER_COPY_SPECS entry %q", spec)
+		}
+		dest := filepath.Join(gomodDir, parts[0])
+		if err := os.MkdirAll(filepath.Dir(dest), 0o755); err != nil {
+			return err
+		}
+		src, err := filepath.Abs(parts[1])
+		if err != nil {
+			return err
+		}
+		data, err := os.ReadFile(src)
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(dest, data, 0o644); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
