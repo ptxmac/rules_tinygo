@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"io/fs"
 	"log"
@@ -15,8 +16,8 @@ func main() {
 		log.Fatal(err)
 	}
 }
-func run() error {
 
+func run() error {
 	path := os.Getenv("BUILDER_GOBIN_PATH")
 	abs, err := filepath.Abs(path)
 	if err != nil {
@@ -30,7 +31,6 @@ func run() error {
 	cmd.Env = os.Environ()
 	cmd.Env = append(cmd.Env, fmt.Sprintf("PATH=%s", abs))
 
-	// goroot
 	goroot := os.Getenv("BUILDER_GOROOT")
 	if goroot == "" {
 		return fmt.Errorf("BUILDER_GOROOT is not set")
@@ -49,7 +49,6 @@ func run() error {
 	if err != nil {
 		return err
 	}
-
 	cmd.Env = append(cmd.Env, fmt.Sprintf("TINYGOROOT=%s", tinyGoRoot))
 
 	if gomodDir := os.Getenv("BUILDER_GOMOD_DIR"); gomodDir != "" {
@@ -57,17 +56,89 @@ func run() error {
 		if err != nil {
 			return err
 		}
+		if gopathDir := os.Getenv("BUILDER_GOPATH_DIR"); gopathDir != "" {
+			gopathDir, err = filepath.Abs(gopathDir)
+			if err != nil {
+				return err
+			}
+			if err := copyGopathToModule(gopathDir, gomodDir); err != nil {
+				return err
+			}
+		}
 		if err := copyPackageSources(gomodDir); err != nil {
 			return err
 		}
 		cmd.Dir = gomodDir
 	}
 
-	if err := cmd.Run(); err != nil {
+	return cmd.Run()
+}
+
+func readModulePath(gomodDir string) (string, error) {
+	data, err := os.ReadFile(filepath.Join(gomodDir, "go.mod"))
+	if err != nil {
+		return "", err
+	}
+	scanner := bufio.NewScanner(strings.NewReader(string(data)))
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if strings.HasPrefix(line, "module ") {
+			return strings.TrimSpace(strings.TrimPrefix(line, "module ")), nil
+		}
+	}
+	return "", fmt.Errorf("module path not found in %s/go.mod", gomodDir)
+}
+
+func copyGopathToModule(gopathDir, gomodDir string) error {
+	modulePath, err := readModulePath(gomodDir)
+	if err != nil {
 		return err
 	}
 
-	return nil
+	srcRoot := filepath.Join(gopathDir, "src")
+	info, err := os.Stat(srcRoot)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil
+		}
+		return err
+	}
+	if !info.IsDir() {
+		return fmt.Errorf("gopath src is not a directory: %s", srcRoot)
+	}
+
+	return filepath.WalkDir(srcRoot, func(path string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() {
+			return err
+		}
+
+		rel, err := filepath.Rel(srcRoot, path)
+		if err != nil {
+			return err
+		}
+		rel = filepath.ToSlash(rel)
+		importDir := filepath.ToSlash(filepath.Dir(rel))
+		if importDir != modulePath && !strings.HasPrefix(importDir, modulePath+"/") {
+			return nil
+		}
+
+		modRel := strings.TrimPrefix(importDir, modulePath)
+		modRel = strings.TrimPrefix(modRel, "/")
+		dest := filepath.Join(gomodDir, modRel, filepath.Base(path))
+		if err := os.MkdirAll(filepath.Dir(dest), 0o755); err != nil {
+			return err
+		}
+
+		src, err := filepath.Abs(path)
+		if err != nil {
+			return err
+		}
+		data, err := os.ReadFile(src)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(dest, data, 0o644)
+	})
 }
 
 func copyPackageSources(gomodDir string) error {
@@ -97,11 +168,4 @@ func copyPackageSources(gomodDir string) error {
 		}
 	}
 	return nil
-}
-
-func tree() {
-	_ = filepath.WalkDir(".", func(path string, d fs.DirEntry, err error) error {
-		fmt.Println(path)
-		return nil
-	})
 }

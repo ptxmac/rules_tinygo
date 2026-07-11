@@ -3,17 +3,30 @@ The rules for TinyGo.
 """
 
 load("@bazel_skylib//lib:paths.bzl", "paths")
-load("@rules_go//go:def.bzl", "GoSDK")
+load("@rules_go//go:def.bzl", "GoInfo", "GoPath", "GoSDK")
 
 def _tinygo_binary(ctx):
     srcs = ctx.files.srcs
+    embed = ctx.attr.embed
     importpath = ctx.attr.importpath
+    gopath = ctx.attr.gopath
 
-    if not importpath and not srcs:
-        fail("tinygo_binary: importpath or srcs is required")
-    if importpath and not ctx.file.mod:
+    if embed:
+        if importpath:
+            fail("tinygo_binary: set embed or importpath, not both")
+        if not ctx.file.mod:
+            fail("tinygo_binary: mod is required when embed is set")
+        if not gopath:
+            fail("tinygo_binary: internal error: gopath is required when embed is set")
+        importpath = embed[0][GoInfo].importpath
+        if not importpath:
+            fail("tinygo_binary: embed target must have an importpath")
+    elif not importpath and not srcs:
+        fail("tinygo_binary: embed, importpath, or srcs is required")
+
+    if importpath and not embed and not ctx.file.mod:
         fail("tinygo_binary: mod is required when importpath is set")
-    if srcs and importpath and not ctx.attr.package_dir:
+    if srcs and importpath and not ctx.attr.package_dir and not embed:
         fail("tinygo_binary: package_dir is required when both importpath and srcs are set")
 
     binaryen = ctx.toolchains["@rules_tinygo//binaryen:toolchain_type"]
@@ -33,8 +46,12 @@ def _tinygo_binary(ctx):
     if ctx.attr.scheduler:
         args += ["-scheduler", ctx.attr.scheduler]
 
+    if ctx.attr.buildmode:
+        args += ["-buildmode", ctx.attr.buildmode]
+
     sdk = ctx.attr.go_sdk[GoSDK]
     mod_inputs = []
+    extra_inputs = []
     env = {
         "BUILDER_GOROOT": sdk.root_file.dirname,
         "HOME": "/tmp/tinygexp",
@@ -49,10 +66,17 @@ def _tinygo_binary(ctx):
         mod_inputs = [mod]
         if ctx.file.sum:
             mod_inputs.append(ctx.file.sum)
-        env["BUILDER_GOMOD_DIR"] = paths.dirname(mod.path)
+        mod_dir = paths.dirname(mod.path)
+        if mod_dir == "":
+            mod_dir = "."
+        env["BUILDER_GOMOD_DIR"] = mod_dir
         args.append(importpath)
         execution_requirements["requires-network"] = "1"
-        if srcs:
+        if gopath:
+            gopath_info = gopath[GoPath]
+            env["BUILDER_GOPATH_DIR"] = gopath_info.gopath_file.path
+            extra_inputs = gopath[DefaultInfo].files.to_list()
+        elif srcs:
             env["BUILDER_COPY_SPECS"] = ",".join([
                 ctx.attr.package_dir + "/" + paths.basename(src.path) + "|" + src.path
                 for src in srcs
@@ -62,17 +86,21 @@ def _tinygo_binary(ctx):
 
     ctx.actions.run(
         executable = ctx.executable._builder,
-        inputs = (
-            toolchain.tool_files +
-            srcs +
-            mod_inputs +
-            toolchain.srcs +
-            toolchain.libs +
-            toolchain.targets +
-            [sdk.go] +
-            sdk.srcs.to_list() +
-            sdk.tools.to_list() +
-            [binaryen.wasm_opt]
+        inputs = depset(
+            direct = (
+                toolchain.tool_files +
+                srcs +
+                mod_inputs +
+                toolchain.srcs +
+                toolchain.libs +
+                toolchain.targets +
+                [sdk.go, binaryen.wasm_opt] +
+                extra_inputs
+            ),
+            transitive = [
+                sdk.srcs,
+                sdk.tools,
+            ],
         ),
         arguments = args,
         outputs = [ctx.outputs.out],
@@ -88,6 +116,14 @@ tinygo_binary = rule(
     implementation = _tinygo_binary,
     doc = "Compiles a Go binary using TinyGo.",
     attrs = {
+        "embed": attr.label_list(
+            providers = [GoInfo],
+            doc = "go_library targets to embed, like go_binary. Requires mod and a gopath target.",
+        ),
+        "gopath": attr.label(
+            providers = [GoPath],
+            doc = "Internal go_path output populated by the tinygo_binary macro.",
+        ),
         "srcs": attr.label_list(
             allow_files = [".go"],
             doc = "Source files to compile. With importpath, main-package sources copied into package_dir.",
@@ -108,6 +144,9 @@ tinygo_binary = rule(
         ),
         "scheduler": attr.string(
             doc = "Optional TinyGo scheduler, e.g. \"none\".",
+        ),
+        "buildmode": attr.string(
+            doc = "Optional TinyGo build mode, e.g. \"wasi-legacy\" for Zellij plugins.",
         ),
         "target": attr.string(
             doc = "Target architecture.",
