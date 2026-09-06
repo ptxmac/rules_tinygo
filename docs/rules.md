@@ -9,20 +9,24 @@ Public API re-exports
 <pre>
 load("@rules_tinygo//tinygo:defs.bzl", "tinygo_binary")
 
-tinygo_binary(<a href="#tinygo_binary-name">name</a>, <a href="#tinygo_binary-srcs">srcs</a>, <a href="#tinygo_binary-out">out</a>, <a href="#tinygo_binary-go_sdk">go_sdk</a>, <a href="#tinygo_binary-target">target</a>)
+tinygo_binary(<a href="#tinygo_binary-name">name</a>, <a href="#tinygo_binary-embed">embed</a>, <a href="#tinygo_binary-mod">mod</a>, <a href="#tinygo_binary-sum">sum</a>, <a href="#tinygo_binary-kwargs">**kwargs</a>)
 </pre>
 
-Compiles a Go binary using TinyGo.
+Builds a TinyGo binary.
 
-**ATTRIBUTES**
+When `embed` is set (like `go_binary`), a hidden `go_path` target materializes
+the embedded library and its transitive dependencies for module-mode TinyGo.
 
 
-| Name  | Description | Type | Mandatory | Default |
-| :------------- | :------------- | :------------- | :------------- | :------------- |
-| <a id="tinygo_binary-name"></a>name |  A unique name for this target.   | <a href="https://bazel.build/concepts/labels#target-names">Name</a> | required |  |
-| <a id="tinygo_binary-srcs"></a>srcs |  Source files to compile.   | <a href="https://bazel.build/concepts/labels">List of labels</a> | optional |  `[]`  |
-| <a id="tinygo_binary-out"></a>out |  Output binary.   | <a href="https://bazel.build/concepts/labels">Label</a> | optional |  `None`  |
-| <a id="tinygo_binary-go_sdk"></a>go_sdk |  Go SDK to use.   | <a href="https://bazel.build/concepts/labels">Label</a> | optional |  `"@go_default_sdk//:go_sdk"`  |
-| <a id="tinygo_binary-target"></a>target |  Target architecture.   | String | optional |  `""`  |
+**PARAMETERS**
+
+
+| Name  | Description | Default Value |
+| :------------- | :------------- | :------------- |
+| <a id="tinygo_binary-name"></a>name |  Target name.   |  none |
+| <a id="tinygo_binary-embed"></a>embed |  go_library targets to embed, like go_binary.   |  `None` |
+| <a id="tinygo_binary-mod"></a>mod |  Module root go.mod label; required when embed is set.   |  `None` |
+| <a id="tinygo_binary-sum"></a>sum |  Optional go.sum label for the module root.   |  `None` |
+| <a id="tinygo_binary-kwargs"></a>kwargs |  Remaining attributes passed to the underlying tinygo_binary rule.   |  none |
 
 
