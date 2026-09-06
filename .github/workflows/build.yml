@@ -18,6 +18,12 @@ jobs:
           key: ${{ runner.os }}-bazel
       - name: Run Build
         run: bazel build //...
+      - name: TEMP print regenerated docs
+        run: |
+          bazel run //docs:update
+          echo "----BEGIN docs/rules.md----"
+          cat docs/rules.md
+          echo "----END docs/rules.md----"
       - name: Run Tests
         run: bazel test //...
       - name: Store bazel cache
