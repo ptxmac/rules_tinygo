@@ -21,4 +21,9 @@ TOOL_VERSIONS = {
         "linux-amd64": "sha384-wsXo2bmFXByTKOQlNIgv1utXs+9RcoyDVJDZFLUj3PCsxV/ztkyKeJqafDStjPuC",
         "linux-arm64": "sha384-hFL7jW7RgttffkTQijoGqlFFdVMQHv5GKWtKfitp8gnOFaDBuIsnCu3mygeiZdH+",
     },
+    "0.42.0": {
+        "darwin-arm64": "sha384-/Ju7yzKICToGK/50prRpZ+Hb+yHMfnGWTjRg/VzbYxUrs7xZPK7Sh7NXZKRHtWqS",
+        "linux-amd64": "sha384-hzNvc789+r8PAfpZ35c0OADLCivBpARm06DqtVge5OAKieoqa7zaLhvJkpShbJPz",
+        "linux-arm64": "sha384-LwsvESVazg0GmAaBchF74AkWxMLxf6PYPcWlO9MtfpgA77uRYk4GabVcCmG6RzrR",
+    },
 }
