@@ -1,0 +1,23 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+load("@rules_tinygo//tinygo:defs.bzl", "tinygo_binary")
+
+go_library(
+    name = "langversion_lib",
+    srcs = ["main.go"],
+    importpath = "example.com/smoke/embed/langversion",
+)
+
+# Build for the host so langversion_test can run it.
+tinygo_binary(
+    name = "langversion_bin",
+    out = "langversion",
+    embed = [":langversion_lib"],
+    tags = ["block-network"],
+    visibility = ["//:__pkg__"],
+)
+
+go_test(
+    name = "langversion_test",
+    srcs = ["langversion_test.go"],
+    data = [":langversion_bin"],
+)
