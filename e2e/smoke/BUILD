@@ -14,6 +14,7 @@ build_test(
     targets = [
         # targets you add above
         ":empty",
+        "//embed/hello",
     ],
 )
 

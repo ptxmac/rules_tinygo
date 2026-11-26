@@ -14,8 +14,6 @@ def _tinygo_binary(ctx):
     if embed:
         if importpath:
             fail("tinygo_binary: set embed or importpath, not both")
-        if not ctx.file.mod:
-            fail("tinygo_binary: mod is required when embed is set")
         if not gopath:
             fail("tinygo_binary: internal error: gopath is required when embed is set")
         importpath = embed[0][GoInfo].importpath
@@ -61,7 +59,13 @@ def _tinygo_binary(ctx):
     }
     execution_requirements = {}
 
-    if importpath:
+    if embed:
+        # Build in GOPATH mode from the go_path tree. All dependencies are
+        # already in the tree, so the action needs neither go.mod nor network.
+        env["BUILDER_GOPATH_DIR"] = gopath[GoPath].gopath_file.path
+        extra_inputs = gopath[DefaultInfo].files.to_list()
+        args.append(importpath)
+    elif importpath:
         mod = ctx.file.mod
         mod_inputs = [mod]
         if ctx.file.sum:
@@ -72,11 +76,7 @@ def _tinygo_binary(ctx):
         env["BUILDER_GOMOD_DIR"] = mod_dir
         args.append(importpath)
         execution_requirements["requires-network"] = "1"
-        if gopath:
-            gopath_info = gopath[GoPath]
-            env["BUILDER_GOPATH_DIR"] = gopath_info.gopath_file.path
-            extra_inputs = gopath[DefaultInfo].files.to_list()
-        elif srcs:
+        if srcs:
             env["BUILDER_COPY_SPECS"] = ",".join([
                 ctx.attr.package_dir + "/" + paths.basename(src.path) + "|" + src.path
                 for src in srcs
@@ -118,7 +118,7 @@ tinygo_binary = rule(
     attrs = {
         "embed": attr.label_list(
             providers = [GoInfo],
-            doc = "go_library targets to embed, like go_binary. Requires mod and a gopath target.",
+            doc = "go_library targets to embed, like go_binary. Built offline in GOPATH mode from a go_path tree.",
         ),
         "gopath": attr.label(
             providers = [GoPath],

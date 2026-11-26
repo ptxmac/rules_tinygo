@@ -1,0 +1,9 @@
+load("@rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "greet",
+    srcs = ["greet.go"],
+    importpath = "example.com/smoke/embed/greet",
+    visibility = ["//embed:__subpackages__"],
+    deps = ["@com_github_google_uuid//:uuid"],
+)
