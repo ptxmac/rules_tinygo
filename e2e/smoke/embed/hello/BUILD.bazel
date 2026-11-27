@@ -1,0 +1,20 @@
+load("@rules_go//go:def.bzl", "go_library")
+load("@rules_tinygo//tinygo:defs.bzl", "tinygo_binary")
+
+go_library(
+    name = "hello_lib",
+    srcs = ["main.go"],
+    importpath = "example.com/smoke/embed/hello",
+    deps = ["//embed/greet"],
+)
+
+# Embeds a go_library with a Bazel-fetched third-party dependency and builds
+# with network access blocked.
+tinygo_binary(
+    name = "hello",
+    out = "hello.wasm",
+    embed = [":hello_lib"],
+    tags = ["block-network"],
+    target = "wasip1",
+    visibility = ["//:__pkg__"],
+)

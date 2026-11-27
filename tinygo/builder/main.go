@@ -1,9 +1,7 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"io/fs"
 	"log"
 	"os"
 	"os/exec"
@@ -51,19 +49,21 @@ func run() error {
 	}
 	cmd.Env = append(cmd.Env, fmt.Sprintf("TINYGOROOT=%s", tinyGoRoot))
 
-	if gomodDir := os.Getenv("BUILDER_GOMOD_DIR"); gomodDir != "" {
-		gomodDir, err = filepath.Abs(gomodDir)
+	if gopathDir := os.Getenv("BUILDER_GOPATH_DIR"); gopathDir != "" {
+		// GOPATH mode: all packages come from the go_path tree built by Bazel.
+		gopathDir, err = filepath.Abs(gopathDir)
 		if err != nil {
 			return err
 		}
-		if gopathDir := os.Getenv("BUILDER_GOPATH_DIR"); gopathDir != "" {
-			gopathDir, err = filepath.Abs(gopathDir)
-			if err != nil {
-				return err
-			}
-			if err := copyGopathToModule(gopathDir, gomodDir); err != nil {
-				return err
-			}
+		cmd.Env = append(cmd.Env,
+			fmt.Sprintf("GOPATH=%s", gopathDir),
+			"GO111MODULE=off",
+			"GOPROXY=off",
+		)
+	} else if gomodDir := os.Getenv("BUILDER_GOMOD_DIR"); gomodDir != "" {
+		gomodDir, err = filepath.Abs(gomodDir)
+		if err != nil {
+			return err
 		}
 		if err := copyPackageSources(gomodDir); err != nil {
 			return err
@@ -72,73 +72,6 @@ func run() error {
 	}
 
 	return cmd.Run()
-}
-
-func readModulePath(gomodDir string) (string, error) {
-	data, err := os.ReadFile(filepath.Join(gomodDir, "go.mod"))
-	if err != nil {
-		return "", err
-	}
-	scanner := bufio.NewScanner(strings.NewReader(string(data)))
-	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())
-		if strings.HasPrefix(line, "module ") {
-			return strings.TrimSpace(strings.TrimPrefix(line, "module ")), nil
-		}
-	}
-	return "", fmt.Errorf("module path not found in %s/go.mod", gomodDir)
-}
-
-func copyGopathToModule(gopathDir, gomodDir string) error {
-	modulePath, err := readModulePath(gomodDir)
-	if err != nil {
-		return err
-	}
-
-	srcRoot := filepath.Join(gopathDir, "src")
-	info, err := os.Stat(srcRoot)
-	if err != nil {
-		if os.IsNotExist(err) {
-			return nil
-		}
-		return err
-	}
-	if !info.IsDir() {
-		return fmt.Errorf("gopath src is not a directory: %s", srcRoot)
-	}
-
-	return filepath.WalkDir(srcRoot, func(path string, d fs.DirEntry, err error) error {
-		if err != nil || d.IsDir() {
-			return err
-		}
-
-		rel, err := filepath.Rel(srcRoot, path)
-		if err != nil {
-			return err
-		}
-		rel = filepath.ToSlash(rel)
-		importDir := filepath.ToSlash(filepath.Dir(rel))
-		if importDir != modulePath && !strings.HasPrefix(importDir, modulePath+"/") {
-			return nil
-		}
-
-		modRel := strings.TrimPrefix(importDir, modulePath)
-		modRel = strings.TrimPrefix(modRel, "/")
-		dest := filepath.Join(gomodDir, modRel, filepath.Base(path))
-		if err := os.MkdirAll(filepath.Dir(dest), 0o755); err != nil {
-			return err
-		}
-
-		src, err := filepath.Abs(path)
-		if err != nil {
-			return err
-		}
-		data, err := os.ReadFile(src)
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(dest, data, 0o644)
-	})
 }
 
 func copyPackageSources(gomodDir string) error {
